@@ -10,6 +10,16 @@ const Login = () => {
         //toast.succes("Hello")
     }
 
+    const handleRegister = e => {
+        e.preventDefault()
+
+        const formData = new FormData(e.target);
+
+        const{username, email, password} = Object.fromEntries(formData);
+
+        
+    }
+
     const[avatar, setAvatar] = useState({
         file:null,
         url:""
@@ -38,7 +48,7 @@ const Login = () => {
         <div className="separator"></div>
         <div className="item">
         <h2>Create an Account</h2>
-            <form>
+            <form onSubmit={handleRegister}>
                 <label htmlFor="file">
                     <img src={avatar.url || "./avatar.png"} alt="" />
                     Upload an image </label>
