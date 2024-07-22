@@ -19,6 +19,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth()
 export const db = getFirestore()
 export const storage = getStorage()
-export {firebaseConfig};
-//ovaj deo cemu sluzi?
-export default app;
+

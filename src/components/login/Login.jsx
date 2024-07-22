@@ -46,7 +46,6 @@ const Login = () => {
                 email: email,
                 avatar: imgUrl,
                 id: res.user.uid,
-
                 blocked: [],
             });
 

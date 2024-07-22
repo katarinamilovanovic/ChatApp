@@ -1,17 +1,35 @@
 import { useEffect, useRef, useState } from "react"
 import "./chat.css"
 import EmojiPicker from "emoji-picker-react"
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../lib/firebase";
+import { useChatStore } from "../../lib/chatStore";
 
 
 const Chat = () => {
     const[open, setOpen] = useState(false);
+    const[chat, setChat] = useState();
     const[text, setText] = useState("");
+
+    const {chatId} = useChatStore();
 
     const endRef = useRef(null)
 
     useEffect(() => {
         endRef.current?.scrollIntoView({behaviour: "smooth"});
-    },[])
+    },[]);
+
+    useEffect(() => {
+        const onSub = onSnapshot(doc(db, "chats", chatId), (res) => {
+            setChat(res.data());
+        });
+
+        return()=>{
+            onSub();
+        };
+
+    },[chatId]);
+
 
     const handleEmoji = (e) =>{
         setText((prev) => prev + e.emoji);
@@ -37,37 +55,18 @@ const Chat = () => {
 
 
         <div className="center">
-            <div className="message">
-                <img src="./avatar.png" alt="" />
-                <div className="texts">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis labore tenetur adipisci sint non consequatur, reiciendis vel sed id dignissimos. Nemo, maiores quis harum autem ducimus dolorem nostrum exercitationem nulla.</p>
-                    <span>1 min ago</span>
-                </div>
-            </div>
+           {chat?.messages?.map((message) => (
 
-            <div className="message own">
+           
+            <div className="message own" key={message?.createAt}>
                 <div className="texts">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis labore tenetur adipisci sint non consequatur, reiciendis vel sed id dignissimos. Nemo, maiores quis harum autem ducimus dolorem nostrum exercitationem nulla.</p>
-                    <span>1 min ago</span>
+                    {message.img && 
+                    <img src={message.img} alt="" />}
+                    <p>{message.text}</p>
+                   {/* <span>{message}</span>*/}
                 </div>
             </div> 
-
-            <div className="message">
-                <img src="./avatar.png" alt="" />
-                <div className="texts">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis labore tenetur adipisci sint non consequatur, reiciendis vel sed id dignissimos. Nemo, maiores quis harum autem ducimus dolorem nostrum exercitationem nulla.</p>
-                    <span>1 min ago</span>
-                </div>
-            </div> 
-
-            <div className="message own">
-                <div className="texts">
-                    <img src="./avatar.png" alt="" />
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis labore tenetur adipisci sint non consequatur, reiciendis vel sed id dignissimos. Nemo, maiores quis harum autem ducimus dolorem nostrum exercitationem nulla.</p>
-                    <span>1 min ago</span>
-                </div>
-            </div> 
-
+            ))}
             <div ref = {endRef}></div>
         </div>
 
