@@ -7,8 +7,13 @@ import {doc, updateDoc, arrayRemove, arrayUnion} from "firebase/firestore";
 
 const Detail = () => {
 
-    const {chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock} = useChatStore();
+    const {resetChat, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock} = useChatStore();
     const {currentUser} = useUserStore();
+
+    const handleLogout = () => {
+        auth.signOut();
+        resetChat()
+    };
 
     const handleBlock = async ()=>{
         if(!user) return;
@@ -104,7 +109,7 @@ const Detail = () => {
                 }
             </button>
 
-            <button className="logout" onClick={() => auth.signOut()}>Log out</button>
+            <button className="logout" onClick={handleLogout}>Log out</button>
 
 
         </div>

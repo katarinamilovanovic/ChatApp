@@ -6,6 +6,7 @@ import { db } from "../../lib/firebase";
 import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
 import upload from "../../lib/upload";
+//import { format } from "timeago.js";
 
 const Chat = () => {
     const[open, setOpen] = useState(false);
@@ -98,12 +99,12 @@ const Chat = () => {
             
         } catch (err) {
             console.log(err);
+        } finally{
+            setImg({
+                file: null,
+                url: "",
+            })
         }
-
-        setImg({
-            file: null,
-            url: "",
-        })
 
         setText("");
     };
@@ -135,7 +136,6 @@ const Chat = () => {
                     {message.img && 
                     <img src={message.img} alt="" />}
                     <p>{message.text}</p>
-                   {/* <span>{message}</span>*/}
                 </div>
             </div> 
             ))}
