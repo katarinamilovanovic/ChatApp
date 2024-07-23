@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react"
 import "./chat.css"
 import EmojiPicker from "emoji-picker-react"
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, getDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import { useChatStore } from "../../lib/chatStore";
-
+import { useUserStore } from "../../lib/userStore";
 
 const Chat = () => {
     const[open, setOpen] = useState(false);
     const[chat, setChat] = useState();
     const[text, setText] = useState("");
 
-    const {chatId} = useChatStore();
+    const {chatId, user} = useChatStore();
+    const {currentUser} = useUserStore();
 
     const endRef = useRef(null)
 
@@ -34,6 +35,49 @@ const Chat = () => {
     const handleEmoji = (e) =>{
         setText((prev) => prev + e.emoji);
         setOpen(false)
+    };
+
+    const handleSend = async () => {
+        if(text === "") return;
+
+        try {
+
+            await updateDoc(doc(db, "chats", chatId),{
+                messages: arrayUnion({
+                    senderId: currentUser.id,
+                    text: text,
+                    createdAt: new Date(),
+                }),
+            });
+
+            const userIDs = [currentUser.id, user.id];
+
+            userIDs.forEach(async (id) => {
+
+            const userChatsRef = doc(db, "userchats", currentUser.id);
+            const userChatsSnapshot = await getDoc(userChatsRef);
+
+            if(userChatsSnapshot.exists()){
+                const userChatsData = userChatsSnapshot.data();
+
+                const chatIndex = userChatsData.chats.findIndex
+                    ((c) => c.chatId === chatId
+                );
+
+                userChatsData.chats[chatIndex].lastMessage = text;
+                userChatsData.chats[chatIndex].isSeen = 
+                    id === currentUser.id ? true : false;
+                userChatsData.chats[chatIndex].updatedAt = Date.now();
+
+                await updateDoc(userChatsRef, {
+                    chats: userChatsData.chats,
+                });
+            }
+            });
+            
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -89,7 +133,7 @@ const Chat = () => {
                     <EmojiPicker open = {open} onEmojiClick={handleEmoji}/>
                 </div> 
             </div>
-            <button className="sendButton">Send</button>
+            <button className="sendButton" onClick={handleSend}>Send</button>
         </div>
       </div>
     ) 
