@@ -2,7 +2,9 @@
 
 ## Opis Projekta
 
-Web Chat Application je aplikacija za ćaskanje koja omogućava korisnicima da se registruju, prijave i razmenjuju poruke u realnom vremenu. Izgrađena je koristeći React za korisnički interfejs, Firebase za autentifikaciju i skladištenje podataka, i Zustand za upravljanje stanjem. Aplikacija pruža intuitivno iskustvo razgovora uz jednostavan pristup korisničkim profilima i chatovima. 
+Web Chat Application je aplikacija za ćaskanje koja omogućava korisnicima da se registruju, prijave i razmenjuju poruke u realnom vremenu. Izgrađena je koristeći React za korisnički interfejs, Firebase za autentifikaciju i skladištenje podataka, i Zustand za upravljanje stanjem. 
+
+Aplikacija pruža intuitivno iskustvo razgovora uz jednostavan pristup korisničkim profilima i chatovima. 
 
 ## Tehnologije
 
@@ -17,30 +19,33 @@ Web Chat Application je aplikacija za ćaskanje koja omogućava korisnicima da s
    Da biste klonirali ovaj projekat na lokalnu mašinu, koristite sledeću komandu:
 
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/katarinamilovanovic/ChatApp.git
+   ```
 
-2. Instalacija Zavisiosti
+2. Instalacija Zavisnosti
 
-Pređite u direktorijum projekta i instalirajte sve zavisnosti koristeći npm ili yarn:
+Pređite u direktorijum projekta i instalirajte sve zavisnosti koristeći npm:
 
 ```bash
 
-cd your-repo-name
+cd ChatApp
 npm install
 npm install firebase
 npm install zustand
 
+```
+
 3. Pokretanje Aplikacije
 
 Pokrenite razvojni server koristeći npm:
-
+```
 npm run dev
-
+```
 Otvoriće se nova kartica u vašem pretraživaču sa lokalnim URL-om gde možete videti aplikaciju, obično na http://localhost:5173.
 
 
-Doprinos
-Ako želite da doprinesete ovom projektu, slobodno otvorite "issue" ili napravite "pull request" sa svojim predlozima i ispravkama.
+## Doprinos
+Ako želite da doprinesete ovom projektu, slobodno otvorite issue ili napravite pull request sa svojim predlozima i ispravkama.
 
-Kontakt
+## Kontakt
 Za dodatne informacije ili pitanja, možete kontaktirati autora na k.milovanovic55@gmail.com.
