@@ -6,6 +6,7 @@ export const useChatStore = create((set) => ({
   user: null,
   isCurrentUserBlocked: false,
   isReceiverBlocked: false,
+  
   changeChat: (chatId, user) => {
     const currentUser = useUserStore.getState().currentUser;
     //proveriti da li je trenutni korisnik blokiran
