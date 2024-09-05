@@ -8,7 +8,7 @@ Aplikacija pruža intuitivno iskustvo razgovora uz jednostavan pristup korisnič
 
 ## Tehnologije
 
-- React: Biblioteka za izgradnju korisničkog interfejsa
+- Vite: Alat za izgradnju korisničkog interfejsa
 - Firebase: Platforma za autentifikaciju, skladištenje i real-time bazu podataka
 - Zustand: Alat za upravljanje stanjem u React aplikacijama
 
